@@ -22,12 +22,10 @@ import android.view.KeyEvent;
 import android.widget.RadioGroup ;
 import android.view.KeyEvent.Callback ;
 import android.view.View.OnKeyListener ;
-
 import java.net.URLEncoder;
-
 import android.widget.Toast;
-
 import android.util.Log;
+import android.widget.ImageButton;
 
 public class BlocNote extends Activity
 {
@@ -40,6 +38,7 @@ public class BlocNote extends Activity
     private DatabaseHandler databaseHandler;
     private Fichier file;
 
+    ImageGet imageGetter;
 
     EditText textBrut;
     TextView textAffiche;
@@ -52,6 +51,11 @@ public class BlocNote extends Activity
     Button souligne;
 
     RadioGroup couleur;
+
+    ImageButton angry;
+    ImageButton lol;
+    ImageButton sad;
+
 
 
     @Override
@@ -68,13 +72,14 @@ public class BlocNote extends Activity
         this.textAffiche = (TextView)findViewById(R.id.tvPreviewLabel);
         this.mainLayout = (HidableLayout)findViewById(R.id.HidableLayout);
 
-
+        this.initImagesbuttons();
         this.initTextBrut();
         this.initDataFetch();
         this.initBoutonMasquer();
         this.fetchText();
         this.initStyleButton();
         setFontColor();
+
         this.mainLayout.setDeployable((RelativeLayout)findViewById(R.id.aCacher));
 
 
@@ -117,7 +122,7 @@ public class BlocNote extends Activity
       {
         newCharSequence+=((""+theString.charAt(i)).equals("\r")||(""+theString.charAt(i)).equals("\n"))?"<br/>\n":""+theString.charAt(i);
       }
-      textAffiche.setText(Html.fromHtml(newCharSequence,null,null));
+      textAffiche.setText(Html.fromHtml(newCharSequence,imageGetter,null));
     }
 
     private void updateTextDisplayed()
@@ -128,7 +133,7 @@ public class BlocNote extends Activity
       {
         newCharSequence+=((""+theString.charAt(i)).equals("\r")||(""+theString.charAt(i)).equals("\n"))?"<br/>\n":""+theString.charAt(i);
       }
-      textAffiche.setText(Html.fromHtml(newCharSequence,null,null));
+      textAffiche.setText(Html.fromHtml(newCharSequence,imageGetter,null));
     }
 
     private void initBoutonMasquer()
@@ -157,9 +162,7 @@ public class BlocNote extends Activity
 
     private void fetchText()
     {
-      Log.e("BlocNote","fecthing the data");
       String contenu = this.file.ouverture((Context)this);
-      Log.e("BlocNote",contenu);
       setEditTextText(contenu);
       updateTextDisplayed();
     }
@@ -210,6 +213,45 @@ public class BlocNote extends Activity
         public void onClick(View vue)
         {
           putStyleBalises("<u>","</u>");
+        }
+      });
+    }
+
+    private void initImagesbuttons()
+    {
+      this.imageGetter=new ImageGet(this);
+
+      this.angry = (ImageButton)findViewById(R.id.angry);
+      this.lol = (ImageButton)findViewById(R.id.lol);
+      this.sad = (ImageButton)findViewById(R.id.sad);
+
+      this.angry.setOnClickListener(new View.OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          int selectionStart = textBrut.getSelectionStart();
+          textBrut.getText().insert(selectionStart,"<img src=\"angry\" >");
+        }
+      });
+
+      this.lol.setOnClickListener(new View.OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          int selectionStart = textBrut.getSelectionStart();
+          textBrut.getText().insert(selectionStart,"<img src=\"lol\" >");
+        }
+      });
+
+      this.sad.setOnClickListener(new View.OnClickListener()
+      {
+        @Override
+        public void onClick(View v)
+        {
+          int selectionStart = textBrut.getSelectionStart();
+          textBrut.getText().insert(selectionStart,"<img src=\"sad\" >");
         }
       });
     }

@@ -39,6 +39,35 @@
       android:text="souligne"
       />
 
+      <ImageButton
+        android:id="@+id/angry"
+        android:layout_width="wrap_content"
+    	  android:layout_height="wrap_content"
+        android:layout_below="@+id/gras"
+        android:layout_alignParentLeft="true"
+        android:padding="5dip"
+        android:src="@drawable/angry"
+        />
+
+        <ImageButton
+          android:id="@+id/lol"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_alignTop="@+id/angry"
+          android:padding="5dip"
+          android:src="@drawable/lol"
+          />
+          <ImageButton
+            android:id="@+id/sad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/angry"
+            android:padding="5dip"
+            android:src="@drawable/sad"
+            />
+
   </RelativeLayout>
 
   <Button
