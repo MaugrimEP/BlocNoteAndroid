@@ -6,7 +6,7 @@
     >
     <Button
       android:id="@+id/nouvelleNote"
-      android:text="aller vers creer une note"
+      android:text="@string/go_to_create"
       android:onClick="onClickButton"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"

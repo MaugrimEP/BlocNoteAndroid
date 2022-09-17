@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appliName">Le Bloc Note</string>
+    <string name="BlocNoteNameActivity">BlocNote</string>
+    <string name="MenuNameActivity">Menu</string>
+    <string name="editing">Edition :</string>
+    <string name="preview">Prévisualisation :</string>
+    <string name="gras"> gras</string>
+    <string name="italique"> italique</string>
+    <string name="souligne"> souligne</string>
+    <string name="afficher_masquer"> Afficher / Masquer </string>
+    <string name="default_name">nom_note</string>
+    <string name="creer_nouvelle_note">Créer une nouvelle note</string>
+    <string name="creer">Créer</string>
+    <string name="note_created">Note crée</string>
+    <string name="name_already_exist">Le nom existe déjà</string>
+    <string name="cancel">Annuler</string>
+    <string name="canceled">Annulé</string>
+    <string name="note_opened">Note ouverte</string>
+    <string name="delete_note">Supprimer la note</string>
+    <string name="delete">Supprimer</string>
+    <string name="go_to_create">Aller vers créer une note</string>
+</resources>

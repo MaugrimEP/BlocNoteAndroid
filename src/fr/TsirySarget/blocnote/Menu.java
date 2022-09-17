@@ -73,10 +73,10 @@ public class Menu extends Activity
 
       AlertDialog.Builder builder = new AlertDialog.Builder(context);
       builder.setCancelable(true);
-      builder.setTitle("Créer une nouvelle note");
+      builder.setTitle(getString(R.string.creer_nouvelle_note));
       builder.setView(R.layout.dbnouvellenote);
 
-      builder.setPositiveButton("Créer", new DialogInterface.OnClickListener()
+      builder.setPositiveButton(getString(R.string.creer), new DialogInterface.OnClickListener()
       {
         public void onClick(DialogInterface dialog, int id){
 
@@ -90,19 +90,19 @@ public class Menu extends Activity
 
               Fichier newFichier = new Fichier(0,nomFichier); //we dont care about the id since they have an autoincrement
               databaseHandler.insertValue(newFichier);
-              Menu.this.goToBlocNote(newFichier,"Note crée");
+              Menu.this.goToBlocNote(newFichier,getString(R.string.note_created));
             }
             else
             {
-              Toast.makeText(context,"Le nom existe deja", Toast.LENGTH_SHORT).show();
+              Toast.makeText(context,getString(R.string.name_already_exist), Toast.LENGTH_SHORT).show();
             }
         }
       });
 
-      builder.setNegativeButton("Annuler", new DialogInterface.OnClickListener()
+      builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener()
       {
         public void onClick(DialogInterface dialog, int id){
-          Toast.makeText(context,"Annulé", Toast.LENGTH_SHORT).show();
+          Toast.makeText(context,getString(R.string.canceled), Toast.LENGTH_SHORT).show();
           //il a cliquer sur annuler
         }
       });
@@ -146,7 +146,7 @@ public class Menu extends Activity
 
           Fichier file=((Menu)context).getFichier(position);
 
-          Menu.this.goToBlocNote(file,"Note ouverte");
+          Menu.this.goToBlocNote(file,getString(R.string.note_opened));
         }
       });
     }
@@ -175,8 +175,8 @@ public class Menu extends Activity
 
           AlertDialog.Builder builder = new AlertDialog.Builder(context);
           builder.setCancelable(true);
-          builder.setTitle("Supprimer la note");
-          builder.setPositiveButton("Supprimer",new DialogInterface.OnClickListener(){
+          builder.setTitle(getString(R.string.delete_note));
+          builder.setPositiveButton(getString(R.string.delete),new DialogInterface.OnClickListener(){
 
             public void onClick(DialogInterface dialog, int id) {
               Menu menu = Menu.this;

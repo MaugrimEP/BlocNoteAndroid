@@ -10,6 +10,6 @@
       android:id="@+id/newNoteName"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
-      android:text="nom_note"
+      android:text="@+string/default_name"
       />
 </LinearLayout>
