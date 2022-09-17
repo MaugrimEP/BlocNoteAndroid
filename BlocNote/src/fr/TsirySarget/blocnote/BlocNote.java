@@ -116,23 +116,13 @@ public class BlocNote extends Activity
 
     private void setEditTextText(String message)
     {
-      try
-      {
-        //String messageEncoded =  URLEncoder.encode(message, "US-ASCII");
-        //this.textBrut.setText(messageEncoded,TextView.BufferType.EDITABLE);
         this.textBrut.setText(message);
-      }
-      catch(Exception e)
-      {
-        this.textBrut.setText(message);
-      }
 
     }
 
     private void initDataFetch()
     {
       this.databaseHandler=new DatabaseHandler(this);
-
     }
 
     private void initLayoutDataFetching()
