@@ -26,6 +26,8 @@ public class BlocNote extends Activity
 
     private DatabaseHandler databaseHandler;
     private Fichier file;
+    private PhotoGetter getter;
+
 
     EditText textBrut;
     TextView textAffiche;
@@ -39,10 +41,13 @@ public class BlocNote extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blocnote);
 
+
         Intent intent = getIntent();
         String fileName = intent.getExtras().getString("fileName");
         this.file = new Fichier(0,fileName);//the id is not important here
         this.setTitle(fileName);
+
+        getter=new PhotoGetter(this);
 
         this.initDataFetch();
         this.initLayoutDataFetching();
@@ -70,7 +75,7 @@ public class BlocNote extends Activity
 
     private void updateTextDisplayed()
     {
-      textAffiche.setText(Html.fromHtml(textBrut.getText().toString()));
+      textAffiche.setText(Html.fromHtml(textBrut.getText().toString(),getter,null));
     }
 
     private void initBoutonMasquer()
@@ -96,7 +101,7 @@ public class BlocNote extends Activity
         Fichier image = Fichier.bitmapToFichier(bitmap, this.databaseHandler);
         image.ecriture(Fichier.bitmapToString(bitmap),(Context)this);
         this.databaseHandler.insertImage(image.id,this.file.name);
-        String out = "<img src='"+image.name+"'>";
+        String out = "<img src=\""+image.name+"\">";
         this.textBrut.setText(textBrut.getText()+out);
 
       }
