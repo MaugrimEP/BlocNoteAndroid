@@ -1,63 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:shrinkColumns="0"
-    android:stretchColumns="1"
     >
-<TableRow
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  >
-  <TextView
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:text="@string/editing"
-      />
-  <EditText
-      android:id="@+id/etEditingChamp"
+
+    <TextView
+      android:id="@+id/TextView"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:inputType="textMultiLine"
-      android:lines="10"
-      android:textSize="5sp"
-      android:gravity="top"
       />
-</TableRow>
+
+    <Button
+      android:id="@+id/Button"
+      android:text="aller vers creer une note"
+      android:onClick="onClickButton"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      />
 
 
-<TableRow
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  >
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:text="@string/preview"
-    />
-<TextView
-    android:id="@+id/tvPreviewLabel"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:text="@string/preview"
-    />
-</TableRow>
-
-
-<TableRow
-  android:layout_width="fill_parent"
-  android:layout_height="fill_parent"
-  >
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    />
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:text="salut"
-    />
-</TableRow>
-
-</TableLayout>
+</LinearLayout>

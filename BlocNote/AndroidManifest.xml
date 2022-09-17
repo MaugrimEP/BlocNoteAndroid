@@ -3,13 +3,22 @@
       package="fr.TsirySarget.blocnote"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <activity android:name="BlocNote"
-                  android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+    <application android:label="@string/appliName" android:icon="@drawable/ic_launcher">
+
+
+        <activity android:name="Menu"
+                  android:label="@string/MenuNameActivity">
+                  <intent-filter>
+                    <action android:name="android.intent.action.MAIN"/>
+                    <category android:name="android.intent.category.LAUNCHER"/>
+                  </intent-filter>
         </activity>
+
+        <activity android:name="BlocNote"
+                  android:label="@string/BlocNoteNameActivity"
+                  parentActivityName="Menu">
+        </activity>
+
+
     </application>
 </manifest>

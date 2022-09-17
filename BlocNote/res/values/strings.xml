@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BlocNote</string>
+    <string name="appliName">Le Bloc Note</string>
+    <string name="BlocNoteNameActivity">BlocNote</string>
+    <string name="MenuNameActivity">Menu</string>
     <string name="editing">Edition :</string>
     <string name="preview">Prévisualisation :</string>
 </resources>
