@@ -23,6 +23,9 @@ import android.content.Context ;
 
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ArrayAdapter;
+
+import android.widget.AdapterView;
 
 public class Menu extends Activity
 {
@@ -31,6 +34,8 @@ public class Menu extends Activity
 
     ListView listeFiles;
     Button buttonNouvelleNote;
+
+    List<File> files;
 
     /** Called when the activity is first created. */
     @Override
@@ -41,12 +46,8 @@ public class Menu extends Activity
 
         this.databaseHandler=new DatabaseHandler(context);
 
-        this.listeFiles = (ListView) findViewById(R.id.listeFiles);
+        initListView();
         this.buttonNouvelleNote = (Button) findViewById(R.id.nouvelleNote);
-
-
-
-
     }
 
     public void onClickButton(View v) {
@@ -84,9 +85,6 @@ public class Menu extends Activity
             {
               Toast.makeText(context,"le nom existe", Toast.LENGTH_SHORT).show();
             }
-
-
-
         }
       });
 
@@ -100,22 +98,65 @@ public class Menu extends Activity
 
       AlertDialog dialog = builder.create();
       dialog.show();
-
-
     }
 
-    public void TESTgetBD()
+
+    public void peuplerListView()
     {
-      this.databaseHandler.dataTester();
-      List<File> listeFichiers = this.databaseHandler.getFiles();
-      String nomFiles = "";
-      for(File f:listeFichiers)
+
+      this.files = databaseHandler.getFiles();
+
+      List<String> namesFiles = new ArrayList<String>();
+      for(File f : files)
       {
-        test+=f.toString()+" \n";
+        namesFiles.add(f.name);
       }
 
-      this.textView.setText(test);
-
+      ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,namesFiles);
+      this.listeFiles.setAdapter(adapter);
     }
 
+    public void initListView()
+    {
+      this.listeFiles = (ListView) findViewById(R.id.listeFiles);
+      this.peuplerListView();
+
+
+      initOnSimpleClick();
+    }
+
+    public void initOnSimpleClick()
+    {
+      this.listeFiles.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        @Override
+        public void onItemClick(AdapterView<?> adapterView,View view, int position,long id)
+        {
+
+          File file=((Menu)context).getFile(position);
+
+          try{
+            Intent intent = new Intent(Menu.this, BlocNote.class);
+            intent.putExtra("fileName", file.name);
+            startActivity(intent);
+            Toast.makeText(context,"Note ouvert", Toast.LENGTH_SHORT).show();
+          }
+          catch(Exception e){
+            Log.e("Menu",e.toString());
+          }
+        }
+      });
+    }
+
+
+    public File getFile(int position)
+    {
+      return this.files.get(position);
+    }
+
+    @Override
+    public void onStart()
+    {
+      super.onStart();
+      this.peuplerListView();
+    }
 }

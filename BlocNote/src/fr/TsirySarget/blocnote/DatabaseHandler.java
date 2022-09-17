@@ -61,14 +61,6 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     this.database.close();
   }
 
-  public void dataTester()
-  {
-    for(int i=0;i<1;++i)
-    {
-      this.insertValue(new File(i,"f"+i));
-    }
-  }
-
   public List<File> getFiles()
   {
     List<File> resultat = new ArrayList<File>();
@@ -91,6 +83,19 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     return resultat;
   }
+
+  public List<String> getFilesNames()
+  {
+    List<File> files = this.getFiles();
+    List<String> namesFiles = new ArrayList<String>();
+    for(File f : files)
+    {
+      namesFiles.add(f.name);
+    }
+
+    return namesFiles;
+  }
+
 
   public boolean fileAlreadyExist(String nameFile)
   {
