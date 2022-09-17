@@ -17,6 +17,8 @@ import android.content.Context ;
 import android.provider.MediaStore;
 import android.graphics.Bitmap;
 
+import java.net.URLEncoder;
+
 import android.widget.Toast;
 
 import android.util.Log;
@@ -102,9 +104,24 @@ public class BlocNote extends Activity
         image.ecriture(Fichier.bitmapToString(bitmap),(Context)this);
         this.databaseHandler.insertImage(image.id,this.file.name);
         String out = "<img src=\""+image.name+"\">";
-        this.textBrut.setText(textBrut.getText()+out);
+        setEditTextText(textBrut.getText()+out);
 
       }
+    }
+
+    private void setEditTextText(String message)
+    {
+      try
+      {
+        //String messageEncoded =  URLEncoder.encode(message, "US-ASCII");
+        //this.textBrut.setText(messageEncoded,TextView.BufferType.EDITABLE);
+        this.textBrut.setText(message);
+      }
+      catch(Exception e)
+      {
+        this.textBrut.setText(message);
+      }
+
     }
 
     private void initBoutonPhoto()
@@ -138,7 +155,7 @@ public class BlocNote extends Activity
       Log.e("BlocNote","fecthing the data");
       String contenu = this.file.ouverture((Context)this);
       Log.e("BlocNote",contenu);
-      this.textBrut.setText(contenu,TextView.BufferType.EDITABLE);
+      setEditTextText(contenu);
       updateTextDisplayed();
     }
 
