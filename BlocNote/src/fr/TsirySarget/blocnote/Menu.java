@@ -2,7 +2,7 @@ package fr.TsirySarget.blocnote;
 
 import android.app.Activity;
 import android.os.Bundle;
-
+import android.content.SharedPreferences;
 import android.widget.TextView;
 import android.widget.Button;
 import android.view.View;
@@ -13,22 +13,30 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import android.widget.LinearLayout;
 import android.app.AlertDialog.Builder ;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-
+import   	android.graphics.Color  ;
 import android.widget.Toast;
 import android.content.Context ;
-
+import android.preference.PreferenceManager ;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ArrayAdapter;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import android.widget.AdapterView;
 
 public class Menu extends Activity
 {
+
+    public final static String FONT_COLOR ="fontcolor";
+    public final static int BEIGE = 0xFFE6E2AF;
+    public final static int VERT = 0xFFB5E655;
+    public final static int BLEU = 0xFF4BB5C1;
+
     private Context context = this;
     public DatabaseHandler databaseHandler;
 
@@ -43,11 +51,22 @@ public class Menu extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        setFontColor();
 
         this.databaseHandler=new DatabaseHandler(context);
 
         initListView();
         this.buttonNouvelleNote = (Button) findViewById(R.id.nouvelleNote);
+    }
+
+    public void setFontColor()
+    {
+      LinearLayout mainView = (LinearLayout)findViewById(R.id.mainLayout);
+
+
+      SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(this);
+
+      mainView.setBackgroundColor(preferences.getInt(FONT_COLOR,BEIGE));
     }
 
     public void onClickButton(View v) {
@@ -187,4 +206,49 @@ public class Menu extends Activity
       super.onStart();
       this.peuplerListView();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu  menu)
+    {
+      super.onCreateOptionsMenu(menu);
+      MenuInflater inflater = getMenuInflater();
+      inflater.inflate(R.menu.menu, menu);
+      return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+      SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+      SharedPreferences.Editor editor = preferences.edit();
+      LinearLayout mainView = (LinearLayout)findViewById(R.id.mainLayout);
+      switch(item.getItemId())
+      {
+        case R.id.beige:
+        {
+          editor.putInt(FONT_COLOR,BEIGE);
+          editor.commit();
+          mainView.setBackgroundColor(BEIGE);
+          return true;
+        }
+        case R.id.vert:
+        {
+          editor.putInt(FONT_COLOR,VERT);
+          editor.commit();
+          mainView.setBackgroundColor(VERT);
+          return true;
+        }
+        default : //case R.id.bleu:
+        {
+          editor.putInt(FONT_COLOR,BLEU);
+          editor.commit();
+          mainView.setBackgroundColor(BLEU);
+          return true;
+        }
+      }
+
+
+    }
+
+
 }

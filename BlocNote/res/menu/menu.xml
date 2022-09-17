@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+  <item
+    android:title="Préférences">
+    <menu>
+      <item android:title="Couleur de font">
+        <menu>
+          <item android:id="@+id/beige" android:title="beige" />
+          <item android:id="@+id/vert" android:title="vert" />
+          <item android:id="@+id/bleu" android:title="bleu" />
+        </menu>
+      </item>
+    </menu>
+  </item>
+</menu>

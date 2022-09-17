@@ -16,7 +16,8 @@ import android.content.Intent;
 import android.content.Context ;
 import android.provider.MediaStore;
 import android.graphics.Bitmap;
-
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager ;
 import android.widget.RadioGroup ;
 
 import java.net.URLEncoder;
@@ -27,6 +28,11 @@ import android.util.Log;
 
 public class BlocNote extends Activity
 {
+
+  public final static String FONT_COLOR ="fontcolor";
+  public final static int BEIGE = 0xFFE6E2AF;
+  public final static int VERT = 0xFFB5E655;
+  public final static int BLEU = 0xFF4BB5C1;
 
     private DatabaseHandler databaseHandler;
     private Fichier file;
@@ -62,6 +68,7 @@ public class BlocNote extends Activity
         this.initBoutonMasquer();
         this.fetchText();
         this.initStyleButton();
+        setFontColor();
         this.mainLayout.setDeployable((RelativeLayout)findViewById(R.id.aCacher));
 
         this.textBrut.addTextChangedListener(new TextWatcher()
@@ -78,6 +85,16 @@ public class BlocNote extends Activity
           public void afterTextChanged(Editable s){}
 
         });
+    }
+
+    public void setFontColor()
+    {
+      HidableLayout mainView = (HidableLayout)findViewById(R.id.HidableLayout);
+
+
+      SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(this);
+
+      mainView.setBackgroundColor(preferences.getInt(FONT_COLOR,BEIGE));
     }
 
     private void updateTextDisplayed()
