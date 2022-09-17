@@ -30,10 +30,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
   //Noms de colonnes pour la table Image
   public static String IMAGE_ID = "id";
+  public static String IMAGE_IDNOTE = "id_note";
 
   // Creation des tables
   public static final String CREATION_TABLE_FILE = "CREATE TABLE "+TABLE_FILE+"("+FILE_ID+" INTEGER PRIMARY KEY autoincrement,"+FILE_NAME+" TEXT);";
-  public static final String CREATION_TABLE_IMAGE = "CREATE TABLE "+TABLE_IMAGE+"("+IMAGE_ID+" INTEGER PRIMARY KEY autoincrement );";
+  public static final String CREATION_TABLE_IMAGE = "CREATE TABLE "+TABLE_IMAGE+"("+IMAGE_ID+" INTEGER PRIMARY KEY autoincrement,"+FILE_NAME+" TEXT );";
 
 
   public DatabaseHandler(Context context){
@@ -63,9 +64,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     database.insert(TABLE_FILE, null, file);
   }
 
-  public void insertImage(int id) {
+  public void insertImage(int id,String fileName) {
+    Log.e("DatabaseHandler",id+" "+fileName);
     ContentValues image = new ContentValues();
     image.put(IMAGE_ID,id);
+    image.put(FILE_NAME,fileName);
 
     database.insert(TABLE_IMAGE, null, image);
   }
@@ -118,6 +121,29 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     return resultat;
   }
 
+  public List<String> getNomsImagesByNote(Fichier f)
+  {
+    List<String> resultat = new ArrayList<String>();
+
+    String query = "select * from "+TABLE_IMAGE+" where "+FILE_NAME+"='"+f.name+"'";
+
+    Cursor cursor = this.database.rawQuery(query,null);
+    if(cursor!=null)
+    {
+      cursor.moveToFirst();
+      while(!cursor.isAfterLast())
+      {
+        int id = cursor.getInt(0);
+        String nomImage = ""+cursor.getInt(0);
+        resultat.add(nomImage);
+        cursor.moveToNext();
+      }
+    }
+    cursor.close();
+
+    return resultat;
+  }
+
   public List<String> getFichiersNames()
   {
     List<Fichier> files = this.getFichiers();
@@ -141,9 +167,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
   public boolean deleteFichier(Fichier file)
   {
+    this.database.delete(TABLE_IMAGE,FILE_ID+"=?",new String[]{String.valueOf(file.id)});
     return this.database.delete(TABLE_FILE,FILE_ID+"=?",new String[]{String.valueOf(file.id)})>0;
     // String query = "delete from "+TABLE_FILE+" where "+FILE_ID+"='"+file.id+"'";
     // this.database.rawQuery(query,null);
     // return true;
   }
+
 }

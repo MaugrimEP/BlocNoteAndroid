@@ -95,6 +95,7 @@ public class BlocNote extends Activity
         Toast.makeText(getApplicationContext(), "Capture",Toast.LENGTH_SHORT).show();
         Fichier image = Fichier.bitmapToFichier(bitmap, this.databaseHandler);
         image.ecriture(Fichier.bitmapToString(bitmap),(Context)this);
+        this.databaseHandler.insertImage(image.id,this.file.name);
         String out = "<img src='"+image.name+"'>";
         this.textBrut.setText(textBrut.getText()+out);
 
@@ -142,8 +143,4 @@ public class BlocNote extends Activity
       super.onStop();
       this.file.ecriture(textBrut.getText().toString(),(Context)this);
     }
-
-
-
-
 }

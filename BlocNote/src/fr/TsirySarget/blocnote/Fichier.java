@@ -1,7 +1,8 @@
 package fr.TsirySarget.blocnote;
 
 import android.util.Log;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -96,5 +97,12 @@ class Fichier
     context.deleteFile(this.name+".txt");
   }
 
+  protected static void deleteImages(Context context,List<String> images)
+  {
+    for(String image : images)
+    {
+      context.deleteFile(image+".txt");
+    }
+  }
 
 }
