@@ -1,35 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<fr.TsirySarget.blocnote.HidableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  >
+
+  <Button
+    android:layout_width="fill_parent"
+    android:padding="5dip"
+    android:layout_height="wrap_content"
+    android:text="Afficher/masquer"
+    />
+
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:shrinkColumns="1"
-    android:stretchColumns="1"
-
+    android:layout_height="wrap_content"
     >
-<TableRow
-  >
+
   <TextView
       android:text="@string/editing"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:padding="5dip"
       />
   <EditText
       android:id="@+id/etEditingChamp"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
       android:inputType="textMultiLine"
+      android:padding="5dip"
       android:lines="10"
       android:textSize="8sp"
       android:gravity="top"
       />
-</TableRow>
 
-
-<TableRow
-  >
-<TextView
+  <TextView
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:padding="5dip"
     android:text="@string/preview"
     />
-<TextView
-    android:id="@+id/tvPreviewLabel"
-    />
-</TableRow>
 
-</TableLayout>
+    <ScrollView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content">
+
+      <TextView
+      android:id="@+id/tvPreviewLabel"
+      android:layout_width="fill_parent"
+      android:padding="5dip"
+      android:layout_height="wrap_content"
+      />
+
+    </ScrollView>
+
+
+
+
+</LinearLayout>
+
+
+
+</fr.TsirySarget.blocnote.HidableLayout>

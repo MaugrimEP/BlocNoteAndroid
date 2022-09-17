@@ -31,8 +31,8 @@ public class Menu extends Activity
 
         this.databaseHandler=new DatabaseHandler(this);
 
-        this.textView = (TextView) findViewById(R.id.TextView);
-        this.button = (Button) findViewById(R.id.Button);
+        this.textView = (TextView) findViewById(R.id.listeTest);
+        this.button = (Button) findViewById(R.id.nouvelleNote);
 
         this.TESTgetBD();
 

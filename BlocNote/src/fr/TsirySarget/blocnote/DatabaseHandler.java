@@ -63,7 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
   public void dataTester()
   {
-    for(int i=0;i<10;++i)
+    for(int i=0;i<1;++i)
     {
       this.insertValue(new File(i,"f"+i));
     }

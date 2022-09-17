@@ -6,13 +6,13 @@
     >
 
     <TextView
-      android:id="@+id/TextView"
+      android:id="@+id/listeTest"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       />
 
     <Button
-      android:id="@+id/Button"
+      android:id="@+id/nouvelleNote"
       android:text="aller vers creer une note"
       android:onClick="onClickButton"
       android:layout_width="fill_parent"
