@@ -18,7 +18,10 @@ import android.provider.MediaStore;
 import android.graphics.Bitmap;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager ;
+import android.view.KeyEvent;
 import android.widget.RadioGroup ;
+import android.view.KeyEvent.Callback ;
+import android.view.View.OnKeyListener ;
 
 import java.net.URLEncoder;
 
@@ -62,29 +65,39 @@ public class BlocNote extends Activity
         String fileName = intent.getExtras().getString("fileName");
         this.file = new Fichier(0,fileName);//the id is not important here
         this.setTitle(fileName);
+        this.textAffiche = (TextView)findViewById(R.id.tvPreviewLabel);
+        this.mainLayout = (HidableLayout)findViewById(R.id.HidableLayout);
 
+
+        this.initTextBrut();
         this.initDataFetch();
-        this.initLayoutDataFetching();
         this.initBoutonMasquer();
         this.fetchText();
         this.initStyleButton();
         setFontColor();
         this.mainLayout.setDeployable((RelativeLayout)findViewById(R.id.aCacher));
 
-        this.textBrut.addTextChangedListener(new TextWatcher()
+
+
+    }
+
+    public void initTextBrut()
+    {
+      this.textBrut = (EditText)findViewById(R.id.etEditingChamp);
+      this.textBrut.addTextChangedListener(new TextWatcher()
+      {
+        @Override
+        public void onTextChanged(CharSequence s,int start,int before,int count)
         {
-          @Override
-          public void onTextChanged(CharSequence s,int start,int before,int count)
-          {
-            updateTextDisplayed();
-          }
+          updateTextDisplayed();
+        }
 
-          @Override
-          public void beforeTextChanged(CharSequence s,int start,int count,int  after){}
-          @Override
-          public void afterTextChanged(Editable s){}
+        @Override
+        public void beforeTextChanged(CharSequence s,int start,int count,int  after){}
+        @Override
+        public void afterTextChanged(Editable s){}
 
-        });
+      });
     }
 
     public void setFontColor()
@@ -97,9 +110,25 @@ public class BlocNote extends Activity
       mainView.setBackgroundColor(preferences.getInt(FONT_COLOR,BEIGE));
     }
 
+    private void updateTextDisplayed(String theString)
+    {
+      String newCharSequence="";
+      for(int i=0;i<theString.length();++i)
+      {
+        newCharSequence+=((""+theString.charAt(i)).equals("\r")||(""+theString.charAt(i)).equals("\n"))?"<br/>\n":""+theString.charAt(i);
+      }
+      textAffiche.setText(Html.fromHtml(newCharSequence,null,null));
+    }
+
     private void updateTextDisplayed()
     {
-      textAffiche.setText(Html.fromHtml(textBrut.getText().toString(),null,null));
+      String theString=textBrut.getText().toString();
+      String newCharSequence="";
+      for(int i=0;i<theString.length();++i)
+      {
+        newCharSequence+=((""+theString.charAt(i)).equals("\r")||(""+theString.charAt(i)).equals("\n"))?"<br/>\n":""+theString.charAt(i);
+      }
+      textAffiche.setText(Html.fromHtml(newCharSequence,null,null));
     }
 
     private void initBoutonMasquer()
@@ -125,12 +154,6 @@ public class BlocNote extends Activity
       this.databaseHandler=new DatabaseHandler(this);
     }
 
-    private void initLayoutDataFetching()
-    {
-      this.textBrut = (EditText)findViewById(R.id.etEditingChamp);
-      this.textAffiche = (TextView)findViewById(R.id.tvPreviewLabel);
-      this.mainLayout = (HidableLayout)findViewById(R.id.HidableLayout);
-    }
 
     private void fetchText()
     {
