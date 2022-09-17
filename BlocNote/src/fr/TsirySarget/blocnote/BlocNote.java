@@ -26,6 +26,7 @@ import java.net.URLEncoder;
 import android.widget.Toast;
 import android.util.Log;
 import android.widget.ImageButton;
+import 	android.graphics.Color;
 
 public class BlocNote extends Activity
 {
@@ -70,6 +71,7 @@ public class BlocNote extends Activity
         this.file = new Fichier(0,fileName);//the id is not important here
         this.setTitle(fileName);
         this.textAffiche = (TextView)findViewById(R.id.tvPreviewLabel);
+        this.textAffiche.setTextColor(Color.BLACK);
         this.mainLayout = (HidableLayout)findViewById(R.id.HidableLayout);
 
         this.initImagesbuttons();
