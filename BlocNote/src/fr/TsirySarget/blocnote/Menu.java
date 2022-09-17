@@ -75,7 +75,7 @@ public class Menu extends Activity
             }
             else
             {
-              Toast.makeText(context,"le nom existe", Toast.LENGTH_SHORT).show();
+              Toast.makeText(context,"Le nom existe deja", Toast.LENGTH_SHORT).show();
             }
         }
       });
@@ -164,8 +164,6 @@ public class Menu extends Activity
               Fichier file=menu.getFichier(position2);
               file.deleteFichier(context);
               menu.databaseHandler.deleteFichier(file);
-              List<String> lesImages = menu.databaseHandler.getNomsImagesByNote(file);
-              Fichier.deleteImages(context,lesImages);
               menu.peuplerListView();
             }
           });

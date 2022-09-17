@@ -66,43 +66,10 @@ class Fichier
       Log.e("File - ecriture",e.toString());}
   }
 
-  static protected Fichier bitmapToFichier(Bitmap bmp, DatabaseHandler databaseHandler)
-  {
-
-    int newID=databaseHandler.getMaxIDImage()+1;
-
-    Fichier image = new Fichier(newID,String.valueOf(newID));//après tout une image c'est aussi un fichier non ? ^_^
-
-    return image;
-  }
-
-  static protected String bitmapToString(Bitmap bmp)
-  {
-    int size = bmp.getRowBytes() * bmp.getHeight();
-    ByteBuffer b = ByteBuffer.allocate(size);
-    bmp.copyPixelsToBuffer(b);
-
-    byte[] bytes = new byte[size];
-
-    try{
-      b.get(bytes, 0, bytes.length);
-    }catch(Exception e)
-    {}
-
-    return bytes.toString();
-  }
-
   public void deleteFichier(Context context)
   {
     context.deleteFile(this.name+".txt");
   }
 
-  protected static void deleteImages(Context context,List<String> images)
-  {
-    for(String image : images)
-    {
-      context.deleteFile(image+".txt");
-    }
-  }
 
 }

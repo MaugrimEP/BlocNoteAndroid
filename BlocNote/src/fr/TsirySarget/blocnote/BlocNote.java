@@ -28,13 +28,11 @@ public class BlocNote extends Activity
 
     private DatabaseHandler databaseHandler;
     private Fichier file;
-    private PhotoGetter getter;
 
 
     EditText textBrut;
     TextView textAffiche;
     Button boutonMasquer;
-    Button boutonPhoto;
     HidableLayout mainLayout;
     /** Called when the activity is first created. */
     @Override
@@ -49,12 +47,9 @@ public class BlocNote extends Activity
         this.file = new Fichier(0,fileName);//the id is not important here
         this.setTitle(fileName);
 
-        getter=new PhotoGetter(this);
-
         this.initDataFetch();
         this.initLayoutDataFetching();
         this.initBoutonMasquer();
-        this.initBoutonPhoto();
         this.fetchText();
 
         this.mainLayout.setDeployable((RelativeLayout)findViewById(R.id.aCacher));
@@ -77,7 +72,7 @@ public class BlocNote extends Activity
 
     private void updateTextDisplayed()
     {
-      textAffiche.setText(Html.fromHtml(textBrut.getText().toString(),getter,null));
+      textAffiche.setText(Html.fromHtml(textBrut.getText().toString(),null,null));
     }
 
     private void initBoutonMasquer()
@@ -90,23 +85,6 @@ public class BlocNote extends Activity
           mainLayout.toggle();
         }
       });
-    }
-
-    @Override
-    public void onActivityResult(int requestcode, int resultCode, Intent intent)
-    {
-      if(resultCode!=0)
-      {
-        Bundle extras = intent.getExtras();
-        Bitmap bitmap = (Bitmap)extras.get("data");
-        Toast.makeText(getApplicationContext(), "Capture",Toast.LENGTH_SHORT).show();
-        Fichier image = Fichier.bitmapToFichier(bitmap, this.databaseHandler);
-        image.ecriture(Fichier.bitmapToString(bitmap),(Context)this);
-        this.databaseHandler.insertImage(image.id,this.file.name);
-        String out = "<img src=\""+image.name+"\">";
-        setEditTextText(textBrut.getText()+out);
-
-      }
     }
 
     private void setEditTextText(String message)
@@ -122,19 +100,6 @@ public class BlocNote extends Activity
         this.textBrut.setText(message);
       }
 
-    }
-
-    private void initBoutonPhoto()
-    {
-      this.boutonPhoto = (Button)findViewById(R.id.buttonPhoto);
-      this.boutonPhoto.setOnClickListener(new OnClickListener()
-      {
-        public void onClick(View v)
-        {
-          Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-          startActivityForResult(intent, 0);
-        }
-      });
     }
 
     private void initDataFetch()
