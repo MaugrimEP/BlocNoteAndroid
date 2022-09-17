@@ -17,6 +17,8 @@ import android.content.Context ;
 import android.provider.MediaStore;
 import android.graphics.Bitmap;
 
+import android.widget.RadioGroup ;
+
 import java.net.URLEncoder;
 
 import android.widget.Toast;
@@ -34,7 +36,15 @@ public class BlocNote extends Activity
     TextView textAffiche;
     Button boutonMasquer;
     HidableLayout mainLayout;
-    /** Called when the activity is first created. */
+
+
+    Button gras;
+    Button italique;
+    Button souligne;
+
+    RadioGroup couleur;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -51,7 +61,7 @@ public class BlocNote extends Activity
         this.initLayoutDataFetching();
         this.initBoutonMasquer();
         this.fetchText();
-
+        this.initStyleButton();
         this.mainLayout.setDeployable((RelativeLayout)findViewById(R.id.aCacher));
 
         this.textBrut.addTextChangedListener(new TextWatcher()
@@ -130,4 +140,48 @@ public class BlocNote extends Activity
       super.onStop();
       this.file.ecriture(textBrut.getText().toString(),(Context)this);
     }
+
+
+    private void putStyleBalises(String baliseOuvrante, String baliseFermante)
+    {
+      int debutSelection = textBrut.getSelectionStart();
+      int finSelection = textBrut.getSelectionEnd();
+
+      Editable editable = textBrut.getText();
+
+
+      editable.insert(debutSelection, baliseOuvrante);
+      editable.insert(finSelection + 3, baliseFermante);
+    }
+
+    private void initStyleButton()
+    {
+      gras = (Button)findViewById(R.id.gras);
+      gras.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View vue)
+        {
+          putStyleBalises("<b>","</b>");
+        }
+      });
+
+      italique = (Button)findViewById(R.id.italique);
+      italique.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View vue)
+        {
+          putStyleBalises("<i>","<i>");
+        }
+      });
+
+      souligne = (Button)findViewById(R.id.souligne);
+      souligne.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View vue)
+        {
+          putStyleBalises("<u>","</u>");
+        }
+      });
+    }
+
 }

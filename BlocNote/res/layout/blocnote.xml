@@ -12,6 +12,67 @@
     android:layout_height="wrap_content"
     >
 
+    <Button
+      android:id="@+id/gras"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentTop="true"
+      android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+      android:text="gras"
+      />
+
+    <Button
+      android:id="@+id/italique"
+      android:layout_centerHorizontal="true"
+      android:layout_alignParentTop="true"
+      android:layout_width="wrap_content"
+  	  android:layout_height="wrap_content"
+      android:text="italique"
+      />
+
+    <Button
+      android:id="@+id/souligne"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentTop="true"
+      android:layout_width="wrap_content"
+  	  android:layout_height="wrap_content"
+      android:text="souligne"
+      />
+
+    <RadioGroup
+      android:id="@+id/colors"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentLeft="true"
+      android:layout_alignParentRight="true"
+      android:orientation="horizontal"
+      android:layout_below="@+id/gras"
+      >
+
+      <RadioButton
+        android:id="@+id/noir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="noir"
+        />
+
+      <RadioButton
+        android:id="@+id/bleu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bleu"
+        />
+
+      <RadioButton
+        android:id="@+id/rouge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rouge"
+        />
+
+      </RadioGroup>
+
   </RelativeLayout>
 
   <Button
