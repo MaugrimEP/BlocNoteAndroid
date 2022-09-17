@@ -7,7 +7,7 @@
 
 
         <activity android:name="Menu"
-                  android:label="@string/MenuNameActivity">
+                  android:label="@string/appliName">
                   <intent-filter>
                     <action android:name="android.intent.action.MAIN"/>
                     <category android:name="android.intent.category.LAUNCHER"/>
