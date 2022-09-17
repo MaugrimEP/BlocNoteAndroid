@@ -104,4 +104,12 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
     return existeDeja;
   }
+
+  public boolean deleteFile(File file)
+  {
+    return this.database.delete(TABLE_FILE,FILE_ID+"=?",new String[]{String.valueOf(file.id)})>0;
+    // String query = "delete from "+TABLE_FILE+" where "+FILE_ID+"='"+file.id+"'";
+    // this.database.rawQuery(query,null);
+    // return true;
+  }
 }

@@ -71,15 +71,7 @@ public class Menu extends Activity
 
               File newFile = new File(0,nomFichier); //we dont care about the id since they have an autoincrement
               databaseHandler.insertValue(newFile);
-              try{
-                Intent intent = new Intent(Menu.this, BlocNote.class);
-                intent.putExtra("fileName", newFile.name);
-                startActivity(intent);
-                Toast.makeText(context,"Note Crée", Toast.LENGTH_SHORT).show();
-              }
-              catch(Exception e){
-                Log.e("Menu",e.toString());
-              }
+              Menu.this.goToBlocNote(newFile,"Note crée");
             }
             else
             {
@@ -123,6 +115,7 @@ public class Menu extends Activity
 
 
       initOnSimpleClick();
+      initOnLongClick();
     }
 
     public void initOnSimpleClick()
@@ -134,15 +127,49 @@ public class Menu extends Activity
 
           File file=((Menu)context).getFile(position);
 
-          try{
-            Intent intent = new Intent(Menu.this, BlocNote.class);
-            intent.putExtra("fileName", file.name);
-            startActivity(intent);
-            Toast.makeText(context,"Note ouvert", Toast.LENGTH_SHORT).show();
-          }
-          catch(Exception e){
-            Log.e("Menu",e.toString());
-          }
+          Menu.this.goToBlocNote(file,"Note ouverte");
+        }
+      });
+    }
+
+    public void goToBlocNote(File file,String message)
+    {
+      try{
+        Intent intent = new Intent(Menu.this, BlocNote.class);
+        intent.putExtra("fileName", file.name);
+        startActivity(intent);
+        Toast.makeText(context,message, Toast.LENGTH_SHORT).show();
+      }
+      catch(Exception e){
+        Log.e("Menu",e.toString());
+      }
+    }
+
+    public void initOnLongClick()
+    {
+      this.listeFiles.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id)
+        {
+
+          final int position2 = position;//peut sembler ridicule, mais le compilateur demande une variable final pour pouvoir etre accessible depuis la classe anonyme, donc autant suivre les ordres du compilteur hein
+
+          AlertDialog.Builder builder = new AlertDialog.Builder(context);
+          builder.setCancelable(true);
+          builder.setTitle("Supprimer la note");
+          builder.setPositiveButton("Supprimer",new DialogInterface.OnClickListener(){
+
+            public void onClick(DialogInterface dialog, int id) {
+              Menu menu = Menu.this;
+              File file=menu.getFile(position2);
+              menu.databaseHandler.deleteFile(file);
+              menu.peuplerListView();
+            }
+          });
+
+          AlertDialog dialog = builder.create();
+          dialog.show();
+          return true;
         }
       });
     }
