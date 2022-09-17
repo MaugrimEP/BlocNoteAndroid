@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BlocNote</string>
+    <string name="editing">Edition :</string>
+    <string name="preview">Prévisualisation :</string>
 </resources>

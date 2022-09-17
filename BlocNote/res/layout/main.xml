@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:shrinkColumns="0"
+    android:stretchColumns="1"
     >
+<TableRow
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:text="@string/editing"
+      />
+  <EditText
+      android:id="@+id/etEditingChamp"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:inputType="textMultiLine"
+      android:lines="10"
+      android:textSize="5sp"
+      android:gravity="top"
+      />
+</TableRow>
+
+
+<TableRow
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
 <TextView
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Hello World, BlocNote"
+    android:layout_height="fill_parent"
+    android:text="@string/preview"
     />
-</LinearLayout>
+<TextView
+    android:id="@+id/tvPreviewLabel"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:text="@string/preview"
+    />
+</TableRow>
 
+
+<TableRow
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    />
+<TextView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:text="salut"
+    />
+</TableRow>
+
+</TableLayout>
