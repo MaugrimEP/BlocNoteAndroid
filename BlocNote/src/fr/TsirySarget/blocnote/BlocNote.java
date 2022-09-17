@@ -5,15 +5,24 @@ import android.os.Bundle;
 
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Button;
 import android.text.TextWatcher;
+import android.widget.RelativeLayout;
 import android.text.Editable ;
 import android.text.Html ;
+import android.view.View.OnClickListener;
+import android.view.View;
+import android.content.Intent;
 
 public class BlocNote extends Activity
 {
 
+    private DatabaseHandler databaseHandler;
+
     EditText textBrut;
     TextView textAffiche;
+    Button boutonMasquer;
+    HidableLayout mainLayout;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -21,8 +30,17 @@ public class BlocNote extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.blocnote);
 
-        this.textBrut = (EditText)findViewById(R.id.etEditingChamp);
-        this.textAffiche = (TextView)findViewById(R.id.tvPreviewLabel);
+        Intent intent = getIntent();
+        String fileName = intent.getExtras().getString("fileName");
+        this.setTitle(fileName);
+
+        initDataFetch();
+        initLayoutDataFetching();
+
+
+        this.initBoutonMasquer();
+
+        this.mainLayout.setDeployable((RelativeLayout)findViewById(R.id.aCacher));
 
         this.textBrut.addTextChangedListener(new TextWatcher()
         {
@@ -39,4 +57,31 @@ public class BlocNote extends Activity
 
         });
     }
+
+
+    private void initBoutonMasquer()
+    {
+      this.boutonMasquer = (Button)findViewById(R.id.buttonMasquer);
+      this.boutonMasquer.setOnClickListener(new OnClickListener()
+      {
+        public void onClick(View v)
+        {
+          mainLayout.toggle();
+        }
+      });
+    }
+
+    private void initDataFetch()
+    {
+      this.databaseHandler=new DatabaseHandler(this);
+
+    }
+
+    private void initLayoutDataFetching()
+    {
+      this.textBrut = (EditText)findViewById(R.id.etEditingChamp);
+      this.textAffiche = (TextView)findViewById(R.id.tvPreviewLabel);
+      this.mainLayout = (HidableLayout)findViewById(R.id.HidableLayout);
+    }
+
 }

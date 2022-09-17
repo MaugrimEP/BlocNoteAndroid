@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <fr.TsirySarget.blocnote.HidableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/HidableLayout"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:orientation="vertical"
   >
 
-  <Button
+  <RelativeLayout
+    android:id="@+id/aCacher"
     android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <Button
+      android:id="@+id/buttonPhoto"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Add photo"
+      />
+
+  </RelativeLayout>
+
+  <Button
+    android:id="@+id/buttonMasquer"
+    android:layout_width="wrap_content"
     android:padding="5dip"
     android:layout_height="wrap_content"
     android:text="Afficher/masquer"
@@ -15,7 +32,7 @@
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     >
 
   <TextView
@@ -54,12 +71,5 @@
       />
 
     </ScrollView>
-
-
-
-
 </LinearLayout>
-
-
-
 </fr.TsirySarget.blocnote.HidableLayout>

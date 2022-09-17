@@ -92,4 +92,11 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     return resultat;
   }
 
+  public boolean fileAlreadyExist(String nameFile)
+  {
+    String query = "select "+FILE_NAME+" from "+TABLE_FILE+" where "+FILE_NAME+"='"+nameFile+"';";
+    boolean existeDeja = (this.database.rawQuery(query,null).getCount()==0) ? false : true;
+
+    return existeDeja;
+  }
 }
