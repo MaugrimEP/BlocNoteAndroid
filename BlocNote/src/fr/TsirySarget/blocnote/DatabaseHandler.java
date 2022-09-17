@@ -22,13 +22,19 @@ public class DatabaseHandler extends SQLiteOpenHelper{
 
   // Noms des Tables
   public static final String TABLE_FILE = "Fichier";
+  public static final String TABLE_IMAGE = "Image";
 
   // Noms des colones de la table Fichier
   public static final String FILE_ID = "id";
   public static final String FILE_NAME = "name";
 
+  //Noms de colonnes pour la table Image
+  public static String IMAGE_ID = "id";
+
   // Creation des tables
   public static final String CREATION_TABLE_FILE = "CREATE TABLE "+TABLE_FILE+"("+FILE_ID+" INTEGER PRIMARY KEY autoincrement,"+FILE_NAME+" TEXT);";
+  public static final String CREATION_TABLE_IMAGE = "CREATE TABLE "+TABLE_IMAGE+"("+IMAGE_ID+" INTEGER PRIMARY KEY autoincrement );";
+
 
   public DatabaseHandler(Context context){
     super(context,NOM_BASE,null,VERSION_BASE);
@@ -39,12 +45,13 @@ public class DatabaseHandler extends SQLiteOpenHelper{
   @Override
   public void onCreate(SQLiteDatabase db){
     db.execSQL(CREATION_TABLE_FILE);
+    db.execSQL(CREATION_TABLE_IMAGE);
   }
 
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
     db.execSQL("DROP TABLE IF EXISTS "+TABLE_FILE);
-
+    db.execSQL("DROP TABLE IF EXISTS "+TABLE_IMAGE);
     onCreate(db);
   }
 
@@ -54,6 +61,33 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     file.put(FILE_NAME,f.name);
 
     database.insert(TABLE_FILE, null, file);
+  }
+
+  public void insertImage(int id) {
+    ContentValues image = new ContentValues();
+    image.put(IMAGE_ID,id);
+
+    database.insert(TABLE_IMAGE, null, image);
+  }
+
+  public int getMaxIDImage()
+  {
+    int max = -1;
+    String query = "select max("+IMAGE_ID+") from "+TABLE_IMAGE+";";
+    Cursor cursor = this.database.rawQuery(query,null);
+    if(cursor!=null)
+    {
+      cursor.moveToFirst();
+      while(!cursor.isAfterLast())
+      {
+        max = cursor.getInt(0);
+        cursor.moveToNext();
+      }
+    }
+    cursor.close();
+
+    return max;
+
   }
 
   public void close()

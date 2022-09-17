@@ -162,6 +162,7 @@ public class Menu extends Activity
             public void onClick(DialogInterface dialog, int id) {
               Menu menu = Menu.this;
               Fichier file=menu.getFichier(position2);
+              file.deleteFichier(context);
               menu.databaseHandler.deleteFichier(file);
               menu.peuplerListView();
             }
