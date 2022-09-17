@@ -32,10 +32,10 @@ public class Menu extends Activity
     private Context context = this;
     public DatabaseHandler databaseHandler;
 
-    ListView listeFiles;
+    ListView listeFichiers;
     Button buttonNouvelleNote;
 
-    List<File> files;
+    List<Fichier> files;
 
     /** Called when the activity is first created. */
     @Override
@@ -69,9 +69,9 @@ public class Menu extends Activity
             if(!alreadyExist)
             {
 
-              File newFile = new File(0,nomFichier); //we dont care about the id since they have an autoincrement
-              databaseHandler.insertValue(newFile);
-              Menu.this.goToBlocNote(newFile,"Note crée");
+              Fichier newFichier = new Fichier(0,nomFichier); //we dont care about the id since they have an autoincrement
+              databaseHandler.insertValue(newFichier);
+              Menu.this.goToBlocNote(newFichier,"Note crée");
             }
             else
             {
@@ -96,21 +96,21 @@ public class Menu extends Activity
     public void peuplerListView()
     {
 
-      this.files = databaseHandler.getFiles();
+      this.files = databaseHandler.getFichiers();
 
-      List<String> namesFiles = new ArrayList<String>();
-      for(File f : files)
+      List<String> namesFichiers = new ArrayList<String>();
+      for(Fichier f : files)
       {
-        namesFiles.add(f.name);
+        namesFichiers.add(f.name);
       }
 
-      ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,namesFiles);
-      this.listeFiles.setAdapter(adapter);
+      ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,namesFichiers);
+      this.listeFichiers.setAdapter(adapter);
     }
 
     public void initListView()
     {
-      this.listeFiles = (ListView) findViewById(R.id.listeFiles);
+      this.listeFichiers = (ListView) findViewById(R.id.listeFichiers);
       this.peuplerListView();
 
 
@@ -120,19 +120,19 @@ public class Menu extends Activity
 
     public void initOnSimpleClick()
     {
-      this.listeFiles.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+      this.listeFichiers.setOnItemClickListener(new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> adapterView,View view, int position,long id)
         {
 
-          File file=((Menu)context).getFile(position);
+          Fichier file=((Menu)context).getFichier(position);
 
           Menu.this.goToBlocNote(file,"Note ouverte");
         }
       });
     }
 
-    public void goToBlocNote(File file,String message)
+    public void goToBlocNote(Fichier file,String message)
     {
       try{
         Intent intent = new Intent(Menu.this, BlocNote.class);
@@ -147,7 +147,7 @@ public class Menu extends Activity
 
     public void initOnLongClick()
     {
-      this.listeFiles.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+      this.listeFichiers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id)
         {
@@ -161,8 +161,8 @@ public class Menu extends Activity
 
             public void onClick(DialogInterface dialog, int id) {
               Menu menu = Menu.this;
-              File file=menu.getFile(position2);
-              menu.databaseHandler.deleteFile(file);
+              Fichier file=menu.getFichier(position2);
+              menu.databaseHandler.deleteFichier(file);
               menu.peuplerListView();
             }
           });
@@ -175,7 +175,7 @@ public class Menu extends Activity
     }
 
 
-    public File getFile(int position)
+    public Fichier getFichier(int position)
     {
       return this.files.get(position);
     }

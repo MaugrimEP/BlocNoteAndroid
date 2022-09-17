@@ -13,11 +13,15 @@ import android.text.Html ;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.content.Intent;
+import android.content.Context ;
+
+import android.util.Log;
 
 public class BlocNote extends Activity
 {
 
     private DatabaseHandler databaseHandler;
+    private Fichier file;
 
     EditText textBrut;
     TextView textAffiche;
@@ -32,13 +36,13 @@ public class BlocNote extends Activity
 
         Intent intent = getIntent();
         String fileName = intent.getExtras().getString("fileName");
+        this.file = new Fichier(0,fileName);//the id is not important here
         this.setTitle(fileName);
 
         initDataFetch();
         initLayoutDataFetching();
-
-
         this.initBoutonMasquer();
+        this.fetchText();
 
         this.mainLayout.setDeployable((RelativeLayout)findViewById(R.id.aCacher));
 
@@ -82,6 +86,21 @@ public class BlocNote extends Activity
       this.textBrut = (EditText)findViewById(R.id.etEditingChamp);
       this.textAffiche = (TextView)findViewById(R.id.tvPreviewLabel);
       this.mainLayout = (HidableLayout)findViewById(R.id.HidableLayout);
+    }
+
+    private void fetchText()
+    {
+      Log.e("BlocNote","fecthing the data");
+      String contenu = this.file.ouverture((Context)this);
+      Log.e("BlocNote",contenu);
+      this.textBrut.setText(contenu,TextView.BufferType.EDITABLE);
+    }
+
+    @Override
+    protected void onStop()
+    {
+      super.onStop();
+      this.file.ecriture(textBrut.getText().toString(),(Context)this);
     }
 
 }

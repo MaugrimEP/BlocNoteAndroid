@@ -21,9 +21,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
   public static final int VERSION_BASE = 1;
 
   // Noms des Tables
-  public static final String TABLE_FILE = "File";
+  public static final String TABLE_FILE = "Fichier";
 
-  // Noms des colones de la table File
+  // Noms des colones de la table Fichier
   public static final String FILE_ID = "id";
   public static final String FILE_NAME = "name";
 
@@ -48,7 +48,7 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     onCreate(db);
   }
 
-  public void insertValue(File f) {
+  public void insertValue(Fichier f) {
     ContentValues file = new ContentValues();
     //file.put(FILE_ID,f.id); // unneeded due to the autoincrement
     file.put(FILE_NAME,f.name);
@@ -61,9 +61,9 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     this.database.close();
   }
 
-  public List<File> getFiles()
+  public List<Fichier> getFichiers()
   {
-    List<File> resultat = new ArrayList<File>();
+    List<Fichier> resultat = new ArrayList<Fichier>();
 
     String query = "select * from "+TABLE_FILE+";";
 
@@ -74,8 +74,8 @@ public class DatabaseHandler extends SQLiteOpenHelper{
       while(!cursor.isAfterLast())
       {
         int id = cursor.getInt(0);
-        String nameFile = cursor.getString(1);
-        resultat.add(new File(id,nameFile));
+        String nameFichier = cursor.getString(1);
+        resultat.add(new Fichier(id,nameFichier));
         cursor.moveToNext();
       }
     }
@@ -84,28 +84,28 @@ public class DatabaseHandler extends SQLiteOpenHelper{
     return resultat;
   }
 
-  public List<String> getFilesNames()
+  public List<String> getFichiersNames()
   {
-    List<File> files = this.getFiles();
-    List<String> namesFiles = new ArrayList<String>();
-    for(File f : files)
+    List<Fichier> files = this.getFichiers();
+    List<String> namesFichiers = new ArrayList<String>();
+    for(Fichier f : files)
     {
-      namesFiles.add(f.name);
+      namesFichiers.add(f.name);
     }
 
-    return namesFiles;
+    return namesFichiers;
   }
 
 
-  public boolean fileAlreadyExist(String nameFile)
+  public boolean fileAlreadyExist(String nameFichier)
   {
-    String query = "select "+FILE_NAME+" from "+TABLE_FILE+" where "+FILE_NAME+"='"+nameFile+"';";
+    String query = "select "+FILE_NAME+" from "+TABLE_FILE+" where "+FILE_NAME+"='"+nameFichier+"';";
     boolean existeDeja = (this.database.rawQuery(query,null).getCount()==0) ? false : true;
 
     return existeDeja;
   }
 
-  public boolean deleteFile(File file)
+  public boolean deleteFichier(Fichier file)
   {
     return this.database.delete(TABLE_FILE,FILE_ID+"=?",new String[]{String.valueOf(file.id)})>0;
     // String query = "delete from "+TABLE_FILE+" where "+FILE_ID+"='"+file.id+"'";
